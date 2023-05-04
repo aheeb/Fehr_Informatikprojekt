@@ -37,5 +37,43 @@ function getNewQuote() {
   }
   
   document.addEventListener("DOMContentLoaded", getNewQuote);
-  setInterval(getNewQuote, 7000);
-  
+  function initForm() {
+    document.getElementById("quote-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+    const newQuote = document.getElementById("new-quote").value;
+    const newAuthor = document.getElementById("new-author").value;
+    const formMessage = document.getElementById("form-message");
+
+    const formData = new FormData();
+    formData.append("quote", newQuote);
+    formData.append("author", newAuthor);
+
+    fetch("add_quote.php", {
+        method: "POST",
+        body: formData,
+    })
+        .then((response) => response.text())
+        .then((result) => {
+            if (result === "1") {
+                formMessage.innerText = "Zitat erfolgreich hinzugefügt!";
+                document.getElementById("new-quote").value = "";
+                document.getElementById("new-author").value = "";
+            } else {
+                formMessage.innerText = "Fehler beim Hinzufügen des Zitats.";
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            formMessage.innerText = "Fehler beim Hinzufügen des Zitats.";
+        });
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    getNewQuote();
+    initForm();
+});
+
+setInterval(getNewQuote, 7000);
+
