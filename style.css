@@ -1,0 +1,17 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+#quote{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+div{
+    text-align: center; 
+    margin-top: 20%;
+}
+body{
+    font-family: arial;
+}
