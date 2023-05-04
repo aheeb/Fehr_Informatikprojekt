@@ -10,7 +10,7 @@
 
 div{
     text-align: center; 
-    margin-top: 20%;
+    margin-top: 45vh;
 }
 body{
     font-family: arial;
@@ -41,4 +41,16 @@ body{
       opacity: 0;
     }
   }
+
+
+
+  @media screen and (max-width:960px) {
+
+
+  div{
+    margin-top: 50vh;
+}
+    
+
+}
   
