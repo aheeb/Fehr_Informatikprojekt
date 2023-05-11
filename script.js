@@ -62,13 +62,11 @@ function initForm() {
           $("#new-author-vorname").val("");
           $("#new-author-nachname").val("");
         } else {
-          formMessage.text("Fehler beim Hinzufügen des Zitats.");
+          // Zeigt die Fehlermeldung an, die vom PHP-Skript zurückgegeben wird
+          formMessage.text(result);
         }
       },
-      error: function () {
-        console.error("Error:");
-        formMessage.text("Fehler beim Hinzufügen des Zitats.");
-      },
+      
     });
   });
 }
