@@ -75,4 +75,4 @@ $(document).ready(() => {
   initForm();
 });
 
-setInterval(getNewQuote, 7000);
+setInterval(getNewQuote, 10000);
