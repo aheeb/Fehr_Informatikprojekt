@@ -14,7 +14,8 @@
     <div class="form-container">
         <h2>Zitat hinzufügen</h2>
         <form id="quote-form">
-            <label for="new-quote">Zitat:</label>
+            <form id="quote-form">
+                <label for="new-quote">Zitat:</label>
             <textarea id="new-quote" required></textarea>
             
             <label for="new-author-vorname">Autor Vorname:</label>
@@ -22,9 +23,12 @@
             
             <label for="new-author-nachname">Autor Nachname:</label>
             <input type="text" id="new-author-nachname" required>
-            
-            <button type="submit">Zitat hinzufügen</button>
-        </form>
+                
+                <label for="password">Passwort:</label>
+                <input type="password" id="password" required>
+                
+                <button type="submit">Zitat hinzufügen</button>
+            </form>
         <p id="form-message"></p>
     </div>
     
