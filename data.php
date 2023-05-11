@@ -8,7 +8,7 @@ $dbname = "citation"; // Datenbankname
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// Überprüfen ob die Verbindung hergestellt werden konnte
+// Überprüfen, ob die Verbindung hergestellt werden konnte
 if (!$conn) {
     // Bei Fehler -1 zurückgeben
     echo -1;

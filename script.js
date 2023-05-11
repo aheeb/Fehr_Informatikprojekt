@@ -13,8 +13,8 @@ function getNewQuote() {
       // Nachdem die Fade-out-Animation abgeschlossen ist
       setTimeout(() => {
         // Zitat und Autor aktualisieren
-        quoteElement.html(data.quote);
-        authorElement.html("- " + data.author);
+        quoteElement.text(data.quote);
+        authorElement.text("- " + data.author_vorname + " " + data.author_nachname);
 
         // Fade-in-Animation starten
         quoteElement.removeClass("fade-out");
@@ -40,12 +40,14 @@ function initForm() {
     e.preventDefault();
 
     const newQuote = $("#new-quote").val();
-    const newAuthor = $("#new-author").val();
+    const newAuthorVorname = $("#new-author-vorname").val();
+    const newAuthorNachname = $("#new-author-nachname").val();
     const formMessage = $("#form-message");
 
     const formData = new FormData();
     formData.append("quote", newQuote);
-    formData.append("author", newAuthor);
+    formData.append("author_vorname", newAuthorVorname);
+    formData.append("author_nachname", newAuthorNachname);
 
     $.ajax({
       url: "add_quote.php",
@@ -57,7 +59,8 @@ function initForm() {
         if (result === "1") {
           formMessage.text("Zitat erfolgreich hinzugefügt!");
           $("#new-quote").val("");
-          $("#new-author").val("");
+          $("#new-author-vorname").val("");
+          $("#new-author-nachname").val("");
         } else {
           formMessage.text("Fehler beim Hinzufügen des Zitats.");
         }
