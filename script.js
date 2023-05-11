@@ -43,7 +43,6 @@ function initForm() {
     const newAuthorVorname = $("#new-author-vorname").val();
     const newAuthorNachname = $("#new-author-nachname").val();
     const formMessage = $("#form-message");
-
     const formData = new FormData();
     formData.append("quote", newQuote);
     formData.append("author_vorname", newAuthorVorname);
