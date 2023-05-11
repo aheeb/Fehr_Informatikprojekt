@@ -13,7 +13,7 @@ a{
 }
 div{
     text-align: center; 
-    margin-top: 20%;
+    margin-top: 45vh;
 }
 body{
     font-family: arial;
@@ -44,11 +44,6 @@ body{
       opacity: 0;
     }
   }
-  .form-container {
-    width: 60%;
-    margin: 0 auto;
-    margin-top: 5%;
-}
 
 form {
     display: flex;
@@ -75,4 +70,24 @@ button {
     margin-top: 1rem;
     font-size: 1.2em;
 }
-  
+
+.form-container {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 5%;
+}
+
+
+
+  @media screen and (max-width:960px) {
+
+
+  div{
+    margin-top: 50vh;
+}
+    
+
+
+
+
+}
