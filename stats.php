@@ -1,38 +1,27 @@
 <?php
-session_start();
-
 $servername = "localhost";
 $username = "quotout";
 $password = "qu0t_";
 $dbname = "citation";
 
-// Verbindung zur Datenbank herstellen
-$conn = new mysqli($servername, $username, $password, $dbname);
-$collection = new mysqli($servername, $username, $password, $dbname);
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// Überprüfen, ob die Verbindung erfolgreich hergestellt wurde
-if ($conn->connect_error) {
-    die("Verbindung fehlgeschlagen: " . $conn->connect_error);
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
 }
 
-// SQL-Abfrage ausführen
-$sql = "SELECT * FROM citation"; 
-$result = $conn->query($sql);
+$sql = "SELECT quote, author_vorname, author_nachname, views FROM citation";
+$result = mysqli_query($conn, $sql);
 
-// Ergebnisse ausgeben
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["ID"] . "</td>";
-        echo "<td>" . $row["quote"] . "</td>";
-        echo "<td>" . $row["author_vorname"] . $row["author_nachname"] . "</td>";
-        echo "<td>" . $row["views"] . "</td>"; 
-        echo "</tr>";
+$quotes = array();
+if (mysqli_num_rows($result) > 0) {
+    while($row = mysqli_fetch_assoc($result)) {
+        $quotes[] = $row;
     }
-} else {
-    echo "<tr><td colspan='4'>Keine Daten gefunden</td></tr>";
 }
 
-// Verbindung schließen
+header('Content-Type: application/json');
+echo json_encode($quotes);
+
 $conn->close();
 ?>
