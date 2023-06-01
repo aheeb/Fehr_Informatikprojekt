@@ -88,6 +88,13 @@ button {
   transition: background-color 0.2s;
 }
 
+#stats-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #D2D2D2;
+}
+
 button:hover {
   background-color: #0056b3;
 }
@@ -103,8 +110,19 @@ button:hover {
   margin-top: 5%;
 }
 
+table {
+  margin-top: 2em;
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
 @media screen and (max-width:960px) {
-  .form-container {
+  .form-container{
       width:100%;
-  }
+  }
 }
