@@ -5,8 +5,8 @@ session_start();
 
 // Verbindung zur Datenbank herstellen
 $servername = "localhost"; // Servername
-$username = "root"; // Benutzername
-$password = ""; // Passwort (leer, wenn keine Passwort erforderlich)
+$username = "quotout"; // Benutzername
+$password = "qu0t_"; // Passwort (leer, wenn keine Passwort erforderlich)
 $dbname = "citation"; // Datenbankname
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);

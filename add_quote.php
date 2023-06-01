@@ -1,11 +1,12 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    exit;
-}
+
+// Starten der Sitzung
+session_start();
+
 // Verbindung zur Datenbank herstellen
 $servername = "localhost"; // Servername
-$username = "root"; // Benutzername
-$password = ""; // Passwort (leer, wenn keine Passwort erforderlich)
+$username = "quotout"; // Benutzername
+$password = "qu0t_"; // Passwort (leer, wenn keine Passwort erforderlich)
 $dbname = "citation"; // Datenbankname
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -15,31 +16,33 @@ if (!$conn) {
     // Bei Fehler -1 zurückgeben
     echo -1;
 } else {
-    // Daten aus dem Formular abrufen
-    $newQuote = $_POST['quote'];
-    $newAuthorVorname = $_POST['author_vorname'];
-    $newAuthorNachname = $_POST['author_nachname'];
+    // Zufälliges Zitat auswählen, das nicht das zuletzt angezeigte Zitat ist
+    $lastQuoteId = isset($_SESSION['lastQuoteId']) ? $_SESSION['lastQuoteId'] : 0;
+    $sql = "SELECT * FROM citation WHERE ID != $lastQuoteId ORDER BY RAND() LIMIT 1";
+    $result = mysqli_query($conn, $sql);
 
-    // Überprüfen, ob der Autor bereits existiert
-    $checkAuthorSql = "SELECT * FROM citation WHERE author_vorname = '$newAuthorVorname' AND author_nachname = '$newAuthorNachname'";
-    $checkAuthorResult = mysqli_query($conn, $checkAuthorSql);
+    // Ergebnis überprüfen
+    if (mysqli_num_rows($result) > 0) {
+        // Zitat auslesen
+        $row = mysqli_fetch_assoc($result);
+        
+        // Anzahl der Anzeigen erhöhen
+        $quoteId = $row['ID'];
+        $updateSql = "UPDATE citation SET views = views + 1 WHERE ID = $quoteId";
+        mysqli_query($conn, $updateSql);
 
-    // Wenn der Autor bereits existiert, Fehlermeldung ausgeben
-    if (mysqli_num_rows($checkAuthorResult) > 0) {
-        echo "Autor bereits vorhanden. Zitat konnte nicht hinzugefügt werden.";
+        // Zuletzt angezeigtes Zitat in der Sitzung speichern
+        $_SESSION['lastQuoteId'] = $quoteId;
+
+        // Zitat als JSON-Objekt zurückgeben
+        header('Content-Type: application/json');
+        echo json_encode($row);
     } else {
-        // Autor existiert nicht, daher Zitat zur Datenbank hinzufügen
-        $insertSql = "INSERT INTO citation (quote, author_vorname, author_nachname) VALUES ('$newQuote', '$newAuthorVorname', '$newAuthorNachname')";
-        $result = mysqli_query($conn, $insertSql);
-
-        // Erfolg oder Fehlermeldung ausgeben
-        if ($result) {
-            echo "1"; // Erfolg
-        } else {
-            echo "Fehler beim Hinzufügen des Zitats.";
-        }
+        // Bei Fehler -1 zurückgeben
+        echo -1;
     }
 }
 
 // Verbindung schließen
 mysqli_close($conn);
+?>

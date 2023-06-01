@@ -6,34 +6,27 @@ function getNewQuote() {
       const quoteElement = $("#quote");
       const authorElement = $("#author");
 
-      // Fade-out-Animation starten
-      quoteElement.addClass("fade-out");
-      authorElement.addClass("fade-out");
-
-      // Nachdem die Fade-out-Animation abgeschlossen ist
-      setTimeout(() => {
-        // Zitat und Autor aktualisieren
+      // Start fade-out animation
+      quoteElement.fadeOut(2000, function() {
+        // Update quote after fade-out animation is complete
         quoteElement.text(data.quote);
+        quoteElement.fadeIn(2000);
+      });
+
+      authorElement.fadeOut(2000, function() {
+        // Update author after fade-out animation is complete
         authorElement.text("- " + data.author_vorname + " " + data.author_nachname);
-
-        // Fade-in-Animation starten
-        quoteElement.removeClass("fade-out");
-        authorElement.removeClass("fade-out");
-        quoteElement.addClass("fade-in");
-        authorElement.addClass("fade-in");
-
-        // Fade-in-Animation entfernen, damit sie beim nächsten Mal wieder angewendet werden kann
-        setTimeout(() => {
-          quoteElement.removeClass("fade-in");
-          authorElement.removeClass("fade-in");
-        }, 2000);
-      }, 2000);
+        authorElement.fadeIn(2000);
+      });
     },
     error: function () {
       console.error("Network response was not ok");
     },
   });
 }
+
+// Rest of your code...
+
 
 function initForm() {
   $("#quote-form").on("submit", (e) => {
@@ -75,4 +68,4 @@ $(document).ready(() => {
   initForm();
 });
 
-setInterval(getNewQuote, 10000);
+setInterval(getNewQuote, 5000);
