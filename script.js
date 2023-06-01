@@ -35,11 +35,13 @@ function initForm() {
     const newQuote = $("#new-quote").val();
     const newAuthorVorname = $("#new-author-vorname").val();
     const newAuthorNachname = $("#new-author-nachname").val();
+    const password = $("#password").val();
     const formMessage = $("#form-message");
     const formData = new FormData();
     formData.append("quote", newQuote);
     formData.append("author_vorname", newAuthorVorname);
     formData.append("author_nachname", newAuthorNachname);
+    formData.append("password", password); // Passwort hinzufügen
 
     $.ajax({
       url: "add_quote.php",
@@ -53,15 +55,16 @@ function initForm() {
           $("#new-quote").val("");
           $("#new-author-vorname").val("");
           $("#new-author-nachname").val("");
+          $("#password").val("");
         } else {
-          // Zeigt die Fehlermeldung an, die vom PHP-Skript zurückgegeben wird
           formMessage.text(result);
         }
       },
-      
     });
+    
   });
 }
+
 
 $(document).ready(() => {
   getNewQuote();
