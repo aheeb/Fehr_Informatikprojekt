@@ -10,7 +10,7 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT quote, author_vorname, author_nachname, views FROM citation";
+$sql = "SELECT quote, author_vorname, author_nachname, views FROM citation ORDER BY views DESC";
 $result = mysqli_query($conn, $sql);
 
 $quotes = array();
