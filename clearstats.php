@@ -21,6 +21,6 @@ if (mysqli_query($conn, $sql)) {
 $conn->close();
 
 // Weiterleitung zur stats.html-Seite
-header("Location: stats.php");
+header("Location: stats.html");
 exit();  // Beenden Sie das Skript nach der Weiterleitung, um sicherzustellen, dass kein weiterer Code ausgeführt wird
 ?>
