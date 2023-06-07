@@ -18,21 +18,27 @@ if (!$conn) {
 } else {
     // Zufälliges Zitat auswählen, das nicht das zuletzt angezeigte Zitat ist
     $lastQuoteId = isset($_SESSION['lastQuoteId']) ? $_SESSION['lastQuoteId'] : 0;
-    $sql = "SELECT * FROM citation WHERE ID != $lastQuoteId ORDER BY RAND() LIMIT 1";
+    $sql = "SELECT * FROM citation WHERE id != $lastQuoteId ORDER BY RAND() LIMIT 1";
     $result = mysqli_query($conn, $sql);
 
     // Ergebnis überprüfen
     if (mysqli_num_rows($result) > 0) {
         // Zitat auslesen
         $row = mysqli_fetch_assoc($result);
-        
+
         // Anzahl der Anzeigen erhöhen
-        $quoteId = $row['ID'];
-        $updateSql = "UPDATE citation SET views = views + 1 WHERE ID = $quoteId";
+        $quoteId = $row['id'];
+        $updateSql = "UPDATE citation SET views = views + 1 WHERE id = $quoteId";
         mysqli_query($conn, $updateSql);
 
         // Zuletzt angezeigtes Zitat in der Sitzung speichern
         $_SESSION['lastQuoteId'] = $quoteId;
+
+        // Autor attribute aktualisieren
+        $row['author_vorname'] = $row['author_first_name'];
+        $row['author_nachname'] = $row['author_last_name'];
+        unset($row['author_first_name']);
+        unset($row['author_last_name']);
 
         // Zitat als JSON-Objekt zurückgeben
         header('Content-Type: application/json');

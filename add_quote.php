@@ -37,7 +37,7 @@ if(!$passwordMatch) {
 }
 
 // Prüfen, ob das Zitat bereits existiert
-$checkQuote = $conn->prepare("SELECT * FROM citation WHERE quote = ? AND author_vorname = ? AND author_nachname = ?");
+$checkQuote = $conn->prepare("SELECT * FROM citation WHERE quote = ? AND author_first_name = ? AND author_last_name = ?");
 $checkQuote->bind_param("sss", $quote, $author_vorname, $author_nachname);
 
 $checkQuote->execute();
@@ -52,7 +52,7 @@ if($checkQuote->num_rows > 0) {
 
 $checkQuote->close();
 
-$insertSql = $conn->prepare("INSERT INTO citation (quote, author_vorname, author_nachname) VALUES (?, ?, ?)");
+$insertSql = $conn->prepare("INSERT INTO citation (quote, author_first_name, author_last_name) VALUES (?, ?, ?)");
 $insertSql->bind_param("sss", $quote, $author_vorname, $author_nachname);
 
 if($insertSql->execute()) {
