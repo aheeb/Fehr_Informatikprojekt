@@ -1,41 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Zitatstatistik</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <h1>Statistik</h1>
+<?php
+$servername = "localhost";
+$username = "quotout";
+$password = "qu0t_";
+$dbname = "citation";
 
-    <?php
-    include('fetchstats.php');
-    ?>
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-    <p>Gesamtanzahl der Zitate: <span id="total-quotes"><?= $totalQuotes ?></span></p>
-    <p>Gesamtanzahl der Ansichten: <span id="total-views"><?= $totalViews ?></span></p>
-    <button onclick="window.location.href='clearstats.php'">Views zurücksetzen</button>
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 
-    <table>
-        <thead>
-            <tr>
-                <th>Zitat</th>
-                <th>Autor</th>
-                <th>Ansichten</th>
-            </tr>
-        </thead>
-        <tbody id="quote-table">
-        <?php
-            while($row = mysqli_fetch_assoc($result)) {
-                echo "<tr><td>{$row['quote']}</td><td>{$row['author_first_name']} {$row['author_last_name']}</td><td>{$row['views']}</td></tr>";
-            }
-        ?>
-        </tbody>
-    </table>
+$sql = "SELECT quote, author_first_name, author_last_name, views FROM citation ORDER BY views DESC";
+$result = mysqli_query($conn, $sql);
 
-    <?php
-    mysqli_close($conn);
-    ?>
+$quotes = array();
+if (mysqli_num_rows($result) > 0) {
+    while($row = mysqli_fetch_assoc($result)) {
+        $quotes[] = $row;
+    }
+}
 
-</body>
-</html>
+header('Content-Type: application/json');
+echo json_encode($quotes);
+
+$conn->close();
+?>

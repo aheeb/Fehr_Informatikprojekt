@@ -1,14 +1,13 @@
-$(document).ready(function() {
+$(document).ready(function(){
     $.getJSON('stats.php', function(data) {
+        var totalQuotes = 0;
         var totalViews = 0;
-        $.each(data, function(key, value) {
-            $("#quote-table").append("<tr><td>" + value.quote +
-                                    "</td><td>" + value.author_vorname + " " + value.author_nachname +
-                                    "</td><td>" + value.views +
-                                    "</td></tr>");
-            totalViews += parseInt(value.views);
+        $.each(data, function(key, item) {
+            totalQuotes++;
+            totalViews += parseInt(item.views, 10);
+            $('#quote-table').append('<tr><td>'+item.quote+'</td><td>'+item.author_first_name+'</td><td>'+item.author_last_name+'</td><td>'+item.views+'</td></tr>');
         });
-        $('#total-quotes').html(data.length);
-        $('#total-views').html(totalViews);
+        $('#total-quotes').text(totalQuotes);
+        $('#total-views').text(totalViews);
     });
 });
