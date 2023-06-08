@@ -11,11 +11,6 @@ function getNewQuote() {
         // Update quote after fade-out animation is complete
         quoteElement.text(data.quote);
         quoteElement.fadeIn(2000);
-
-        // Animate quote box width based on character count
-        const charCount = data.quote.length;
-        const newWidth = Math.max(charCount * 0.7, 20) + "em"; // Change the multiplier and base value as necessary
-        $(".quote-box").animate({width: newWidth}, 1000); // Adjust speed of animation as needed
       });
 
       authorElement.fadeOut(2000, function() {
@@ -29,6 +24,9 @@ function getNewQuote() {
     },
   });
 }
+
+// Rest of your code...
+
 
 function initForm() {
   $("#quote-form").on("submit", (e) => {
