@@ -14,7 +14,7 @@ function getNewQuote() {
 
         // Animate quote box width based on character count
         const charCount = data.quote.length;
-        const newWidth = Math.max(charCount * 0.5, 20) + "em"; // Change the multiplier and base value as necessary
+        const newWidth = Math.max(charCount * 0.7, 20) + "em"; // Change the multiplier and base value as necessary
         $(".quote-box").animate({width: newWidth}, 1000); // Adjust speed of animation as needed
       });
 
@@ -29,10 +29,6 @@ function getNewQuote() {
     },
   });
 }
-
-
-// Rest of your code...
-
 
 function initForm() {
   $("#quote-form").on("submit", (e) => {
