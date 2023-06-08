@@ -23,6 +23,7 @@ $insertSql->bind_param("s", $hashedPassword);
 
 if($insertSql->execute()) {
     echo "1"; // Erfolg
+    header('Location: registrieren.php');
 } else {
     echo "Fehler: " . $conn->error;
 }
